@@ -138,6 +138,20 @@ This project helped me understand how cloud infrastructure is used to host websi
 
 The project also helped me understand the difference between using Infrastructure-as-a-Service and using a website builder or Software-as-a-Service platform. With IaaS, I had more control over the server configuration and deployment process.
 
+## Use of External Assistance and AI Tools
+
+This project used AI assistance to help structure the HTML, CSS, JavaScript and documentation. The code was adapted for my ICT171 personal portfolio website and tested on my own Amazon EC2 server.
+
+The server deployment was completed by me. I launched the EC2 instance, connected using SSH, installed Apache, uploaded the website file, copied it into `/var/www/html/index.html`, restarted Apache, and tested the website using the public IP address.
+
+The JavaScript features used in this project are:
+- A live date and time display that updates every second.
+- A dark mode button that changes the page appearance by toggling a CSS class.
+
+These features were included to meet the scripting component of the assignment. The output can be verified online at:
+
+http://15.135.138.233
+
 ## References
 
 * Amazon Web Services EC2 documentation
