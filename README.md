@@ -9,15 +9,16 @@ Project: Cloud-hosted personal portfolio website
 
 ## Project Links
 
-Website URL: http://15.135.138.233
-Public IP Address: 15.135.138.233
+Website URL: https://aidanmacliver.com
+Alternative URL: https://www.aidanmacliver.com
+Elastic IP Address: 3.105.182.179
+DNS Entry: aidanmacliver.com
 GitHub Repository: https://github.com/Macazusa/ICT171-Cloud-Server-Project
 Video Explainer: [Paste video link here]
-DNS Entry: Not configured at time of submission
 
 ## Project Overview
 
-This project involved creating a cloud-hosted personal portfolio website using Infrastructure-as-a-Service. I used Amazon EC2 to deploy a Linux virtual server and installed Apache to host the website. The website is accessible online through a public IP address.
+This project involved creating a cloud-hosted personal portfolio website using Infrastructure-as-a-Service. I used Amazon EC2 to deploy a Linux virtual server and installed Apache to host the website. The website is accessible online through a custom domain name and is secured using HTTPS.
 
 The purpose of this project was to demonstrate how a website can be deployed, configured and managed on a cloud server rather than using local hosting or a Software-as-a-Service website builder.
 
@@ -33,7 +34,10 @@ The website includes multiple interactive JavaScript features, including a live 
 | 6 June 2026   | Website files were created and uploaded to the server.                            |
 | 6 June 2026   | JavaScript date/time and dark mode features were added.                           |
 | 6 June 2026   | Interactive JavaScript tab navigation was added to improve website functionality. |
-| 6 June 2026   | GitHub documentation was completed.                                               |
+| 6 June 2026   | An Elastic IP address was associated with the EC2 instance.                       |
+| 6 June 2026   | Cloudflare DNS A records were configured for the custom domain.                   |
+| 6 June 2026   | HTTPS was configured using Certbot and Let's Encrypt.                             |
+| 6 June 2026   | GitHub documentation was updated with DNS and SSL/TLS configuration details.      |
 
 ## Cloud Provider
 
@@ -41,6 +45,8 @@ Cloud provider: Amazon Web Services
 Service used: Amazon EC2
 Operating system: Ubuntu Linux
 Web server: Apache
+DNS provider: Cloudflare
+SSL/TLS certificate provider: Let's Encrypt
 
 ## Server Setup
 
@@ -56,17 +62,29 @@ sudo systemctl start apache2
 sudo systemctl status apache2
 ```
 
+## Elastic IP Configuration
+
+An Elastic IP address was associated with the EC2 instance so the server would have a stable public IP address for DNS configuration.
+
+Elastic IP address:
+
+```text
+3.105.182.179
+```
+
+This IP address was then used in Cloudflare DNS records to point the domain name to the EC2 server.
+
 ## Security Group Configuration
 
 The following inbound ports were configured:
 
-| Port | Purpose                  |
-| ---- | ------------------------ |
-| 22   | SSH access               |
-| 80   | HTTP web traffic         |
-| 443  | Future HTTPS web traffic |
+| Port | Purpose           |
+| ---- | ----------------- |
+| 22   | SSH access        |
+| 80   | HTTP web traffic  |
+| 443  | HTTPS web traffic |
 
-SSH was used for remote server administration. HTTP was enabled so the website could be publicly accessed from a browser. Port 443 was also allowed for future HTTPS configuration, although HTTPS was not fully configured at the time of submission.
+SSH was used for remote server administration. HTTP was used for normal web traffic and for Let's Encrypt certificate validation. HTTPS was configured after the domain name was connected to the server.
 
 ## Website Deployment
 
@@ -75,7 +93,7 @@ The website was created using HTML, CSS and JavaScript. The completed `index.htm
 Commands used:
 
 ```bash
-scp -i "ICT171-aidan-key.pem" index.html ubuntu@15.135.138.233:/home/ubuntu/index.html
+scp -i "ICT171-aidan-key.pem" index.html ubuntu@3.105.182.179:/home/ubuntu/index.html
 sudo cp /home/ubuntu/index.html /var/www/html/index.html
 sudo systemctl restart apache2
 ```
@@ -84,6 +102,57 @@ The Apache web root directory used for this project was:
 
 ```bash
 /var/www/html/
+```
+
+## DNS Configuration
+
+A custom domain name was configured for this project using Cloudflare DNS. The domain was connected to the Amazon EC2 server using DNS A records.
+
+| Record Type | Name | Value         | Proxy Status |
+| ----------- | ---- | ------------- | ------------ |
+| A           | @    | 3.105.182.179 | DNS only     |
+| A           | www  | 3.105.182.179 | DNS only     |
+
+The domain was tested by opening the website in a browser:
+
+```text
+http://aidanmacliver.com
+http://www.aidanmacliver.com
+```
+
+After confirming that the domain pointed to the EC2 server, HTTPS was configured.
+
+## SSL/TLS Configuration
+
+HTTPS was configured using Let's Encrypt Certbot with Apache.
+
+Commands used:
+
+```bash
+sudo apt update
+sudo apt install certbot python3-certbot-apache -y
+sudo certbot --apache -d aidanmacliver.com -d www.aidanmacliver.com
+```
+
+Certbot successfully issued and deployed a certificate for:
+
+```text
+aidanmacliver.com
+www.aidanmacliver.com
+```
+
+The certificate files were saved on the server at:
+
+```text
+/etc/letsencrypt/live/aidanmacliver.com/fullchain.pem
+/etc/letsencrypt/live/aidanmacliver.com/privkey.pem
+```
+
+The website was tested successfully using HTTPS:
+
+```text
+https://aidanmacliver.com
+https://www.aidanmacliver.com
 ```
 
 ## Website Functionality
@@ -99,8 +168,9 @@ The website is a personal portfolio page that includes:
 * Live JavaScript date and time display
 * Dark mode button
 * Interactive tab navigation
+* HTTPS access through a custom domain name
 
-The website is hosted on the EC2 instance and can be accessed using the public IP address.
+The website is hosted on the EC2 instance and can be accessed using the custom domain name.
 
 ## Scripting Component
 
@@ -132,7 +202,9 @@ The tab navigation feature uses `querySelectorAll()` to find all tab sections an
 
 The output of the JavaScript can be verified directly on the live website:
 
-http://15.135.138.233
+```text
+https://aidanmacliver.com
+```
 
 The script output can be tested by:
 
@@ -146,7 +218,7 @@ The script output can be tested by:
 2. Open the EC2 service.
 3. Launch a new Ubuntu EC2 instance.
 4. Create or select a key pair for SSH access.
-5. Configure the security group to allow port 22 for SSH and port 80 for HTTP web traffic.
+5. Configure the security group to allow ports 22, 80 and 443.
 6. Connect to the server using SSH.
 7. Run `sudo apt update`.
 8. Install Apache using `sudo apt install apache2 -y`.
@@ -156,14 +228,26 @@ The script output can be tested by:
 12. Upload the website file to the server using SCP.
 13. Copy the website file into `/var/www/html/index.html`.
 14. Restart Apache using `sudo systemctl restart apache2`.
-15. Test the website using the public IP address in a browser.
+15. Allocate an Elastic IP address in AWS.
+16. Associate the Elastic IP address with the EC2 instance.
+17. Create DNS A records in Cloudflare pointing `@` and `www` to the Elastic IP address.
+18. Test the domain using HTTP.
+19. Install Certbot using `sudo apt install certbot python3-certbot-apache -y`.
+20. Run Certbot using `sudo certbot --apache -d aidanmacliver.com -d www.aidanmacliver.com`.
+21. Test the website using HTTPS.
 
 ## Testing
 
-The website was tested by opening the public IP address in a web browser:
+The website was tested by opening the custom domain name in a web browser:
 
 ```text
-http://15.135.138.233
+https://aidanmacliver.com
+```
+
+The `www` version was also tested:
+
+```text
+https://www.aidanmacliver.com
 ```
 
 The JavaScript date and time feature was tested by confirming that the time updates automatically every second.
@@ -172,17 +256,13 @@ The dark mode feature was tested by clicking the Toggle Dark Mode button and con
 
 The tab navigation feature was tested by clicking each navigation tab and confirming that the correct content section was displayed.
 
-## DNS and SSL/TLS
-
-At the time of submission, the website was accessible through the EC2 public IP address. A custom DNS entry and full HTTPS configuration were not completed before submission.
-
-Port 443 was opened in the AWS security group for future HTTPS configuration. In a future improvement, a custom domain could be connected using a DNS A record pointing to the EC2 public IP address, and HTTPS could be configured using Let's Encrypt Certbot.
+HTTPS was tested by confirming that the website loaded using `https://` without a browser certificate warning.
 
 ## Use of External Assistance and AI Tools
 
 This project used AI assistance to help structure the HTML, CSS, JavaScript and documentation. The code was adapted for my ICT171 personal portfolio website and tested on my own Amazon EC2 server.
 
-The server deployment was completed by me. I launched the EC2 instance, connected using SSH, installed Apache, uploaded the website file, copied it into `/var/www/html/index.html`, restarted Apache, and tested the website using the public IP address.
+The server deployment was completed by me. I launched the EC2 instance, connected using SSH, installed Apache, uploaded the website file, copied it into `/var/www/html/index.html`, restarted Apache, configured an Elastic IP address, connected the domain using Cloudflare DNS, configured HTTPS using Certbot, and tested the website using the custom domain name.
 
 The JavaScript features used in this project are:
 
@@ -192,13 +272,17 @@ The JavaScript features used in this project are:
 
 These features were included to meet the scripting component of the assignment. The output can be verified online at:
 
-http://15.135.138.233
+```text
+https://aidanmacliver.com
+```
 
 ## Project Reflection
 
 This project helped me understand how cloud infrastructure is used to host websites in a real-world environment. I learned how to launch an EC2 instance, connect to a Linux server using SSH, install and manage Apache, upload website files, and make a website publicly accessible through a cloud server.
 
-The project also helped me understand the difference between using Infrastructure-as-a-Service and using a website builder or Software-as-a-Service platform. With IaaS, I had more control over the server configuration and deployment process.
+I also learned how an Elastic IP address can be used to keep a consistent public IP address for DNS records. Cloudflare was used to manage the DNS records for the custom domain, and Certbot with Let's Encrypt was used to configure HTTPS for Apache.
+
+The project helped me understand the difference between using Infrastructure-as-a-Service and using a website builder or Software-as-a-Service platform. With IaaS, I had more control over the server configuration, DNS setup and HTTPS configuration.
 
 The scripting component helped me understand how JavaScript can be used to make a website more interactive. The live clock, dark mode button and tab navigation all provide visible outputs that can be tested directly on the website.
 
@@ -206,6 +290,9 @@ The scripting component helped me understand how JavaScript can be used to make 
 
 * Amazon Web Services EC2 documentation
 * Apache web server documentation
+* Cloudflare DNS documentation
+* Let's Encrypt documentation
+* Certbot documentation
 * GitHub Markdown documentation
 * ICT171 lab material
 * ChatGPT assistance for structuring HTML, CSS, JavaScript and documentation
