@@ -278,13 +278,13 @@ https://aidanmacliver.com
 
 ## Project Reflection
 
-This project helped me understand how cloud infrastructure is used to host websites in a real-world environment. I learned how to launch an EC2 instance, connect to a Linux server using SSH, install and manage Apache, upload website files, and make a website publicly accessible through a cloud server.
+This project gave me a basic understanding on cloud infrastructure and how it is used to host websites in a real environment. I learned how to launch an EC2 instance, connect to a linus server using SSH, install and manage Apache, upload website files, and make a website publicly accessible through a cloud server.
 
-I also learned how an Elastic IP address can be used to keep a consistent public IP address for DNS records. Cloudflare was used to manage the DNS records for the custom domain, and Certbot with Let's Encrypt was used to configure HTTPS for Apache.
+I also learned how Elastic IP Addresses can keep a consistent public IP address for DNS records. I chose Cloudlfare to manae the DNS records for the custom domain, and Certbot with Lets Encrypt was used to configure HTTPS for apache
 
-The project helped me understand the difference between using Infrastructure-as-a-Service and using a website builder or Software-as-a-Service platform. With IaaS, I had more control over the server configuration, DNS setup and HTTPS configuration.
+This project gave me a greater understanding on the difference between using Infrastructure as a Service and using a web builder or Software as a service platform. With Iaas, I could control server configuration, DNS setup and HTTPS configuration.
 
-The scripting component helped me understand how JavaScript can be used to make a website more interactive. The live clock, dark mode button and tab navigation all provide visible outputs that can be tested directly on the website.
+The scripting component gave me a better perspective on how JavaScript can be used to make websites interactive. The live time, dakr mode button and tab navigation provode outputs that can be tested on the website.
 
 ## References
 
