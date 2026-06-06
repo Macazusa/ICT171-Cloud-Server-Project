@@ -16,6 +16,18 @@ The purpose of this project was to demonstrate how a website can be deployed, co
 Website URL: http://15.135.138.233
 Public IP Address: 15.135.138.233
 
+## Development Timeline
+
+| Date | Activity |
+|---|---|
+| 22 April 2026 | Initial EC2 cloud server was created during the early project stage. |
+| 6 June 2026 | New EC2 Ubuntu instance was launched for the final website deployment. |
+| 6 June 2026 | Apache was installed and configured on the server. |
+| 6 June 2026 | Personal portfolio website was created using HTML, CSS and JavaScript. |
+| 6 June 2026 | JavaScript date/time display and dark mode feature were added. |
+| 6 June 2026 | Website files were uploaded to the server and tested using the public IP address. |
+| 6 June 2026 | GitHub documentation was completed with rebuild steps and project explanation. |
+
 ## Cloud Provider
 
 Cloud provider: Amazon Web Services
