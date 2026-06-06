@@ -7,26 +7,33 @@ Student Number: 33401722
 Unit: ICT171 Introduction to Server Environments and Architectures
 Project: Cloud-hosted personal portfolio website
 
+## Project Links
+
+Website URL: http://15.135.138.233
+Public IP Address: 15.135.138.233
+GitHub Repository: https://github.com/Macazusa/ICT171-Cloud-Server-Project
+Video Explainer: [Paste video link here]
+DNS Entry: Not configured at time of submission
+
 ## Project Overview
 
 This project involved creating a cloud-hosted personal portfolio website using Infrastructure-as-a-Service. I used Amazon EC2 to deploy a Linux virtual server and installed Apache to host the website. The website is accessible online through a public IP address.
 
 The purpose of this project was to demonstrate how a website can be deployed, configured and managed on a cloud server rather than using local hosting or a Software-as-a-Service website builder.
 
-Website URL: http://15.135.138.233
-Public IP Address: 15.135.138.233
+The website includes multiple interactive JavaScript features, including a live date and time display, a dark mode toggle, and tab-style navigation that shows and hides different sections of the website.
 
 ## Development Timeline
 
-| Date | Activity |
-|---|---|
-| 22 April 2026 | Initial EC2 cloud server was created during the early project stage. |
-| 6 June 2026 | New EC2 Ubuntu instance was launched for the final website deployment. |
-| 6 June 2026 | Apache was installed and configured on the server. |
-| 6 June 2026 | Personal portfolio website was created using HTML, CSS and JavaScript. |
-| 6 June 2026 | JavaScript date/time display and dark mode feature were added. |
-| 6 June 2026 | Website files were uploaded to the server and tested using the public IP address. |
-| 6 June 2026 | GitHub documentation was completed with rebuild steps and project explanation. |
+| Date          | Activity                                                                          |
+| ------------- | --------------------------------------------------------------------------------- |
+| 22 April 2026 | Initial AWS EC2 server was created during the early project stage.                |
+| 6 June 2026   | Final Ubuntu EC2 instance was launched for the submitted portfolio website.       |
+| 6 June 2026   | Apache was installed and configured.                                              |
+| 6 June 2026   | Website files were created and uploaded to the server.                            |
+| 6 June 2026   | JavaScript date/time and dark mode features were added.                           |
+| 6 June 2026   | Interactive JavaScript tab navigation was added to improve website functionality. |
+| 6 June 2026   | GitHub documentation was completed.                                               |
 
 ## Cloud Provider
 
@@ -83,12 +90,15 @@ The Apache web root directory used for this project was:
 
 The website is a personal portfolio page that includes:
 
-* An introduction section
-* A skills section
-* A cloud project description
+* A project overview section
+* A cloud infrastructure section
+* A server setup section
+* A scripting section
+* A testing and verification section
 * Student details
-* A JavaScript feature section
-* A dark mode button
+* Live JavaScript date and time display
+* Dark mode button
+* Interactive tab navigation
 
 The website is hosted on the EC2 instance and can be accessed using the public IP address.
 
@@ -96,11 +106,39 @@ The website is hosted on the EC2 instance and can be accessed using the public I
 
 The website includes JavaScript scripting features.
 
-The first feature dynamically displays the current date and time on the website. The time updates automatically every second without refreshing the page.
+### Feature 1: Live Date and Time
 
-The second feature is a dark mode button. When the button is clicked, JavaScript changes the page styling by toggling a CSS class on the body element.
+The first JavaScript feature dynamically displays the current date and time at the top of the website. The time updates automatically every second without needing to refresh the page.
 
-These features demonstrate scripting because the website is not only static HTML and CSS. JavaScript is used to change the page content and appearance dynamically.
+### Feature 2: Dark Mode Toggle
+
+The second JavaScript feature is a dark mode button. When the button is clicked, JavaScript toggles a CSS class on the page body. This changes the website between the normal light theme and a dark theme.
+
+### Feature 3: Interactive Tab Navigation
+
+The third JavaScript feature is interactive tab navigation. When a navigation tab is clicked, JavaScript hides the other website sections and displays the selected section. This makes the website more interactive than a basic static page and allows users to move between sections more clearly.
+
+These scripting features demonstrate that the website is not only static HTML and CSS. JavaScript is used to change the page content and appearance dynamically.
+
+## Script Code Explanation
+
+The live date and time feature uses the JavaScript `Date()` object to get the current date and time. The `setInterval()` function runs the update every second.
+
+The dark mode feature uses `classList.toggle()` to add or remove the `dark-mode` CSS class from the page body.
+
+The tab navigation feature uses `querySelectorAll()` to find all tab sections and buttons. It then removes the active classes from all sections and buttons before applying the active class to the selected tab and section.
+
+## Script Verifiable Output
+
+The output of the JavaScript can be verified directly on the live website:
+
+http://15.135.138.233
+
+The script output can be tested by:
+
+1. Watching the date and time update automatically at the top of the page.
+2. Clicking the Toggle Dark Mode button and confirming the website changes colour.
+3. Clicking the navigation tabs and confirming that different sections appear without loading a new page.
 
 ## How to Rebuild This Project
 
@@ -132,11 +170,13 @@ The JavaScript date and time feature was tested by confirming that the time upda
 
 The dark mode feature was tested by clicking the Toggle Dark Mode button and confirming that the website colours changed.
 
-## Project Reflection
+The tab navigation feature was tested by clicking each navigation tab and confirming that the correct content section was displayed.
 
-This project helped me understand how cloud infrastructure is used to host websites in a real-world environment. I learned how to launch an EC2 instance, connect to a Linux server using SSH, install and manage Apache, upload website files, and make a website publicly accessible through a cloud server.
+## DNS and SSL/TLS
 
-The project also helped me understand the difference between using Infrastructure-as-a-Service and using a website builder or Software-as-a-Service platform. With IaaS, I had more control over the server configuration and deployment process.
+At the time of submission, the website was accessible through the EC2 public IP address. A custom DNS entry and full HTTPS configuration were not completed before submission.
+
+Port 443 was opened in the AWS security group for future HTTPS configuration. In a future improvement, a custom domain could be connected using a DNS A record pointing to the EC2 public IP address, and HTTPS could be configured using Let's Encrypt Certbot.
 
 ## Use of External Assistance and AI Tools
 
@@ -145,12 +185,22 @@ This project used AI assistance to help structure the HTML, CSS, JavaScript and 
 The server deployment was completed by me. I launched the EC2 instance, connected using SSH, installed Apache, uploaded the website file, copied it into `/var/www/html/index.html`, restarted Apache, and tested the website using the public IP address.
 
 The JavaScript features used in this project are:
-- A live date and time display that updates every second.
-- A dark mode button that changes the page appearance by toggling a CSS class.
+
+* A live date and time display that updates every second.
+* A dark mode button that changes the page appearance by toggling a CSS class.
+* Interactive tab navigation that shows and hides website sections.
 
 These features were included to meet the scripting component of the assignment. The output can be verified online at:
 
 http://15.135.138.233
+
+## Project Reflection
+
+This project helped me understand how cloud infrastructure is used to host websites in a real-world environment. I learned how to launch an EC2 instance, connect to a Linux server using SSH, install and manage Apache, upload website files, and make a website publicly accessible through a cloud server.
+
+The project also helped me understand the difference between using Infrastructure-as-a-Service and using a website builder or Software-as-a-Service platform. With IaaS, I had more control over the server configuration and deployment process.
+
+The scripting component helped me understand how JavaScript can be used to make a website more interactive. The live clock, dark mode button and tab navigation all provide visible outputs that can be tested directly on the website.
 
 ## References
 
@@ -158,3 +208,4 @@ http://15.135.138.233
 * Apache web server documentation
 * GitHub Markdown documentation
 * ICT171 lab material
+* ChatGPT assistance for structuring HTML, CSS, JavaScript and documentation
